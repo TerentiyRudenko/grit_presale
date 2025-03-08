@@ -1,38 +1,727 @@
-.App {
-  text-align: center;
+/* App.css */
+
+/* Existing styles */
+.app {
+  min-height: 100vh;
+  color: #ffffff;
+  font-family: "Arial", sans-serif;
+  transition: background 1s ease-out;
+  position: relative;
+  overflow-x: hidden; /* Already present */
+  width: 100vw; /* Ensure it spans the viewport */
 }
 
-.App-logo {
-  height: 40vmin;
+.particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stars-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.stars-background::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 20% 30%,
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    );
+  background-size: 50px 50px;
+  animation: stars 20s linear infinite;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  padding: 0.5rem 0;
+  background: rgba(26, 26, 26, 0.9);
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  z-index: 10;
+  border-bottom: 1px solid rgba(0, 255, 157, 0.2);
+  animation: slideInFromTop 0.8s ease-out;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 10px;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.nav-logo {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #00ff9d;
+  text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  background: none;
+  border: 1px solid #00ff9d;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+  background: #00ff9d;
+  color: #0a0a0a;
+}
+
+/* General Section Styles */
+.section {
+  padding: 4rem 1rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: flex-start;
+  position: relative;
+  z-index: 1;
+  min-height: auto;
+  margin: 2rem 0;
+  width: 100%; /* Ensure section doesn't exceed parent */
+  box-sizing: border-box; /* Include padding in width */
+  overflow: hidden; /* Clip any overflow during animations */
 }
 
-.App-link {
-  color: #61dafb;
+.presale-section {
+  padding-top: 6rem;
 }
 
-@keyframes App-logo-spin {
+.section-title {
+  font-size: 2rem;
+  color: #00ff9d;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+  position: relative;
+  z-index: 2;
+}
+
+.why-section .section-title {
+  position: relative;
+  z-index: 2;
+  color: #00ff9d !important;
+}
+
+.section-subtitle {
+  font-size: 1.2rem;
+  color: #cccccc;
+  margin-bottom: 1.5rem;
+}
+
+.presale-container {
+  background: rgba(26, 26, 26, 0.9);
+  padding: 2rem;
+  border-radius: 15px;
+  width: 400px;
+  text-align: center;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(0, 255, 157, 0.2);
+}
+
+.stats {
+  margin-bottom: 2rem;
+}
+
+.stats-text {
+  margin: 0.5rem 0;
+  color: #cccccc;
+}
+
+.connect-btn {
+  width: 100%;
+}
+
+.purchase-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.token-selector {
+  display: flex;
+  gap: 1rem;
+}
+
+.token-btn {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #00ff9d;
+  background: none;
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.token-btn.active {
+  background: whitesmoke;
+  color: black;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.animate-input {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  background: #2a2a2a;
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.cost-display {
+  font-size: 0.9rem;
+  color: #cccccc;
+}
+
+.animate-btn {
+  background: #00ff9d;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 5px;
+  color: #0a0a0a;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-btn:hover {
+  background: whitesmoke;
+}
+
+.wave-effect::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--wave-y, 0) * 1px);
+  left: calc(var(--wave-x, 0) * 1px);
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease-out, height 0.3s ease-out;
+}
+
+.wave-effect:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.tokenomics-grid {
+  display: grid;
+  gap: 0.8rem;
+  max-width: 600px;
+  width: 100%;
+}
+
+.tokenomics-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(26, 26, 26, 0.9);
+  border-radius: 5px;
+}
+
+.tokenomics-item span:first-child {
+  color: #00ff9d;
+}
+
+.tokenomics-item span:last-child {
+  color: #cccccc;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.feature-card {
+  background: rgba(26, 26, 26, 0.9);
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 255, 157, 0.2);
+  transition: transform 0.3s ease;
+  margin: 0.5rem 0;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+}
+
+.feature-card h3 {
+  color: #00ff9d;
+  margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+  color: #cccccc;
+  font-size: 0.9rem;
+}
+
+.pulse-animation {
+  animation: pulse 2s infinite;
+}
+
+.footer {
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-text {
+  color: #666666;
+}
+
+.notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 50, 50, 0.9);
+  color: #ffffff;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(255, 50, 50, 0.5);
+  z-index: 1000;
+  text-align: center;
+  max-width: 80%;
+  opacity: 0;
+}
+
+.notification.show {
+  animation: slideInNotification 0.5s ease-out forwards;
+}
+
+/* Tokenomics Section */
+.tokenomics-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.tokenomics-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  max-width: 1200px;
+  width: 100%;
+  padding: 2rem;
+}
+
+.tokenomics-header {
+  position: relative;
+  padding-right: 2rem;
+}
+
+.tokenomics-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.glow-card {
+  position: relative;
+  background: rgba(26, 26, 26, 0.9);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  overflow: hidden;
+  border: 1px solid transparent;
+  transform: scale(1.05);
+}
+
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 1px;
+  background: linear-gradient(
+    45deg,
+    rgba(0, 255, 157, 0) 0%,
+    rgba(0, 255, 157, 0.3) 50%,
+    rgba(0, 255, 157, 0) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glow-card:hover::before {
+  opacity: 1;
+}
+
+.glow-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0, 255, 157, 0.2);
+}
+
+.card-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card-label {
+  color: #00ff9d;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+}
+
+.card-value {
+  color: #fff;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.card-glow {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(
+    circle,
+    rgba(0, 255, 157, 0.15) 0%,
+    rgba(0, 255, 157, 0) 70%
+  );
+  filter: blur(30px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glow-card:hover .card-glow {
+  opacity: 1;
+}
+
+/* Roadmap Section */
+.roadmap-section {
+  position: relative;
+  padding: 4rem 1rem;
+}
+
+.roadmap-container {
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+  margin: 2rem auto;
+}
+
+.roadmap-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.roadmap-phase {
+  width: 120px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #00ff9d;
+  text-align: right;
+  padding-right: 1rem;
+  text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+}
+
+.roadmap-content {
+  background: rgba(26, 26, 26, 0.9);
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 255, 157, 0.2);
+  flex: 1;
+  position: relative;
+}
+
+.roadmap-content h3 {
+  color: #00ff9d;
+  margin-bottom: 0.5rem;
+}
+
+.roadmap-content p {
+  color: #cccccc;
+  font-size: 0.9rem;
+}
+
+/* Timeline Line */
+.roadmap-container::before {
+  content: "";
+  position: absolute;
+  left: 140px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(0, 255, 157, 0.5);
+  z-index: 0;
+}
+
+/* Timeline Dot */
+.roadmap-item::before {
+  content: "";
+  position: absolute;
+  left: 135px;
+  width: 12px;
+  height: 12px;
+  background: #00ff9d;
+  border-radius: 50%;
+  z-index: 1;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+}
+
+/* Start elements hidden */
+.section-title,
+.section-subtitle,
+.presale-container,
+.roadmap-item,
+.feature-card {
+  opacity: 0;
+  transition: opacity 0.1s ease-out; /* Fallback for debugging */
+}
+
+.tokenomics-header,
+.tokenomics-card {
+  opacity: 1;
+  transition: opacity 0.1s ease-out; /* Fallback for debugging */
+}
+
+/* Animation Keyframes */
+@keyframes slideFromLeft {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateX(-20px); /* Reduced from -50px to minimize overflow */
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInNotification {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    text-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+  }
+}
+
+@keyframes stars {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 1000px 500px;
+  }
+}
+
+/* Apply animations when animate-on-scroll is added */
+.animate-on-scroll .section-title.slide-from-left,
+.animate-on-scroll .tokenomics-header.slide-from-left {
+  animation: slideFromLeft 0.8s ease-out forwards;
+}
+
+.animate-on-scroll .section-subtitle.slide-from-right {
+  animation: slideFromRight 0.8s ease-out forwards;
+}
+
+.animate-on-scroll .presale-container.fade-in-up,
+.animate-on-scroll .feature-card.fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-on-scroll .tokenomics-card.scale-up {
+  animation: scaleUp 0.8s ease-out forwards;
+}
+
+.animate-on-scroll .roadmap-item.slide-from-left {
+  animation: slideFromLeft 0.8s ease-out forwards;
+}
+
+.animate-on-scroll .roadmap-item.slide-from-right {
+  animation: slideFromRight 0.8s ease-out forwards;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .section {
+    padding: 3rem 1rem 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .presale-section {
+    padding-top: 5rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .why-section .section-title {
+    font-size: 2rem;
+    margin-top: 1rem;
+  }
+
+  .presale-container {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links {
+    gap: 0.5rem;
+  }
+
+  .nav-btn {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .tokenomics-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .tokenomics-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .glow-card {
+    padding: 1rem;
+  }
+
+  .roadmap-item {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+
+  .roadmap-phase {
+    width: 100%;
+    text-align: left;
+    padding-right: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .roadmap-container::before {
+    left: 10px;
+  }
+
+  .roadmap-item::before {
+    left: 5px;
+  }
+
+  .roadmap-content {
+    width: 100%;
   }
 }
